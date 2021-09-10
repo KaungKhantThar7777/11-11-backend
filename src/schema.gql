@@ -2,6 +2,66 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Patient {
+  id: Int!
+  name: String!
+  phone_number: String!
+  email: String!
+  age: Int!
+  gender: String!
+  maritalStatus: String!
+  haveChild: Boolean!
+  childrenCount: Int
+  emergencyPerson: String!
+  emergencyPhone: String!
+  emergencyRelationship: String!
+}
+
+type Appointment {
+  id: Float!
+  hasExperience: Boolean!
+  bestTime: String!
+  bestDay: String!
+  reasons: String!
+  chronicIllness: String!
+  agree_rule: Boolean!
+  patient: Patient!
+}
+
+type CreateAppointmentResult {
+  ok: Boolean!
+  error: String
+  appointment: Appointment
+}
+
 type Query {
-  helloWorld: String!
+  greeting: String!
+}
+
+type Mutation {
+  createAppointment(input: CreateAppointmentInput!): CreateAppointmentResult!
+}
+
+input CreateAppointmentInput {
+  name: String!
+  phone_number: String!
+  email: String!
+  age: Int!
+  gender: String!
+  maritalStatus: String!
+  haveChild: Boolean!
+  childrenCount: Int
+  emergencyPerson: String!
+  emergencyPhone: String!
+  emergencyRelationship: String!
+  hasExperience: Boolean!
+  bestTime: String!
+  bestDay: String!
+  reasons: String!
+  chronicIllness: String!
+  agree_rule: Boolean!
+}
+
+type Subscription {
+  newAppointment: Appointment!
 }

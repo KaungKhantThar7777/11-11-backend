@@ -1,0 +1,2 @@
+export const PUB_SUB = `PUB_SUB`;
+export const NEW_PENDING_APPOINTMENT = `NEW_PENDING_APPOINTMENT`;
