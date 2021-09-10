@@ -3,6 +3,7 @@ import { Args, Mutation, Resolver, Query, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { NEW_PENDING_APPOINTMENT, PUB_SUB } from 'src/common/common.contstants';
 import { AppointmentService } from './appointment.service';
+import { AppointmentsResult } from './dtos/getAppointments.dto';
 import {
   CreateAppointmentInput,
   CreateAppointmentResult,
@@ -15,10 +16,16 @@ export class AppointmentResolver {
     private readonly appointmentService: AppointmentService,
     @Inject(PUB_SUB) private readonly pubSub: PubSub,
   ) {}
-  @Query(() => String)
-  greeting() {
-    return 'hello world';
+
+  @Query(() => AppointmentsResult)
+  async getAppointments(): Promise<AppointmentsResult> {
+    const appointments = await this.appointmentService.getAppointments();
+    return {
+      ok: true,
+      appointments,
+    };
   }
+
   @Mutation(() => CreateAppointmentResult)
   async createAppointment(@Args('input') input: CreateAppointmentInput) {
     try {

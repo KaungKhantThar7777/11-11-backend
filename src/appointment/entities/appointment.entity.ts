@@ -33,7 +33,7 @@ export class Appointment {
   @Field(() => Boolean)
   agree_rule: boolean;
 
-  @ManyToOne(() => Patient)
+  @ManyToOne(() => Patient, (patient) => patient.appointments)
   @Field(() => Patient)
   patient: Patient;
 }

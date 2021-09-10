@@ -2,6 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Appointment {
+  id: Float!
+  hasExperience: Boolean!
+  bestTime: String!
+  bestDay: String!
+  reasons: String!
+  chronicIllness: String!
+  agree_rule: Boolean!
+  patient: Patient!
+}
+
 type Patient {
   id: Int!
   name: String!
@@ -15,17 +26,25 @@ type Patient {
   emergencyPerson: String!
   emergencyPhone: String!
   emergencyRelationship: String!
+  appointments: [Appointment!]!
 }
 
-type Appointment {
-  id: Float!
-  hasExperience: Boolean!
-  bestTime: String!
-  bestDay: String!
-  reasons: String!
-  chronicIllness: String!
-  agree_rule: Boolean!
-  patient: Patient!
+type GetPatientByIdResult {
+  ok: Boolean!
+  error: String
+  patient: Patient
+}
+
+type GetPatientsResult {
+  ok: Boolean!
+  error: String
+  patients: [Patient!]!
+}
+
+type AppointmentsResult {
+  ok: Boolean!
+  error: String
+  appointments: [Appointment!]!
 }
 
 type CreateAppointmentResult {
@@ -35,7 +54,13 @@ type CreateAppointmentResult {
 }
 
 type Query {
-  greeting: String!
+  getPatients: GetPatientsResult!
+  getPatientById(input: GetPatientByIdInput!): GetPatientByIdResult!
+  getAppointments: AppointmentsResult!
+}
+
+input GetPatientByIdInput {
+  id: Int!
 }
 
 type Mutation {
