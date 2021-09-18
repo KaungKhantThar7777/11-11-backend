@@ -1,4 +1,8 @@
-import { Args, Resolver, Query } from '@nestjs/graphql';
+import { Args, Resolver, Query, Mutation } from '@nestjs/graphql';
+import {
+  CreatePatientInput,
+  CreatePatientResult,
+} from './dto/create-patient.dto';
 import {
   GetPatientByIdInput,
   GetPatientByIdResult,
@@ -10,6 +14,21 @@ import { PatientService } from './patient.service';
 export class PatientResolver {
   constructor(private readonly patientService: PatientService) {}
 
+  @Mutation(() => CreatePatientResult)
+  async createPatient(@Args('input') input: CreatePatientInput) {
+    try {
+      const patient = await this.patientService.createPatient(input);
+      return {
+        ok: true,
+        id: patient.id,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error.message,
+      };
+    }
+  }
   @Query(() => GetPatientsResult)
   async getPatients() {
     const patients = await this.patientService.getPatients();

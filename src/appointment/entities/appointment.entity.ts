@@ -1,12 +1,13 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Patient } from 'src/patient/entities/patient.entity';
+import { User } from 'src/user/entities/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
 @Entity()
 export class Appointment {
   @PrimaryGeneratedColumn()
-  @Field()
+  @Field(() => Int)
   id: number;
 
   @Column({ type: 'boolean' })
@@ -36,4 +37,8 @@ export class Appointment {
   @ManyToOne(() => Patient, (patient) => patient.appointments)
   @Field(() => Patient)
   patient: Patient;
+
+  @ManyToOne(() => User, (user) => user.appointments)
+  @Field(() => User)
+  counsellor: User;
 }

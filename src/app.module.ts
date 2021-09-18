@@ -5,13 +5,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Patient } from './patient/entities/patient.entity';
-import { PatientModule } from './patient/patient.module';
 import { AppointmentModule } from './appointment/appointment.module';
 import { Appointment } from './appointment/entities/appointment.entity';
 import { CommonModule } from './common/common.module';
+import { Patient } from './patient/entities/patient.entity';
+import { PatientModule } from './patient/patient.module';
+import { UserModule } from './user/user.module';
+import { User } from './user/entities/user.entity';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './auth/auth.guard';
 
-console.log(__dirname);
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -22,12 +26,21 @@ console.log(__dirname);
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Patient, Appointment],
+      entities: [Patient, Appointment, User],
       synchronize: true,
       logging: 'all',
     }),
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
+      context: ({ req, ...rest }) => {
+        if (req) {
+          return { token: req.headers['token'] };
+        } else if (rest['connectionParams']) {
+          return rest['connectionParams'];
+        }
+
+        console.log(rest);
+      },
       subscriptions: {
         'graphql-ws': true,
       },
@@ -38,8 +51,16 @@ console.log(__dirname);
     PatientModule,
     AppointmentModule,
     CommonModule,
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule {}

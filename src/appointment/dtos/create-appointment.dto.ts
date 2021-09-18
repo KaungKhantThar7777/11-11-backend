@@ -1,31 +1,15 @@
-import { Field, InputType, ObjectType, OmitType } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType, OmitType } from '@nestjs/graphql';
 import { CoreResult } from 'src/common/dtos/core-result.dto';
-import { Patient } from 'src/patient/entities/patient.entity';
 import { Appointment } from '../entities/appointment.entity';
 
 @InputType()
 export class CreateAppointmentInput extends OmitType(
-  Patient,
-  ['id', 'appointments'],
+  Appointment,
+  ['id', 'patient', 'counsellor'],
   InputType,
 ) {
-  @Field(() => Boolean)
-  hasExperience: boolean;
-
-  @Field()
-  bestTime: string;
-
-  @Field()
-  bestDay: string;
-
-  @Field()
-  reasons: string;
-
-  @Field()
-  chronicIllness: string;
-
-  @Field(() => Boolean)
-  agree_rule: boolean;
+  @Field(() => Int)
+  patientId: number;
 }
 
 @ObjectType()

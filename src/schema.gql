@@ -2,8 +2,35 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  id: Int!
+  first_name: String!
+  last_name: String!
+  email: String!
+  password: String!
+  phone_number: String!
+  department: Department!
+  role: UserRole!
+  member_code: String!
+}
+
+enum Department {
+  Esd
+  Media
+  Research
+  PrCommunity
+  OrganizerSupport
+}
+
+enum UserRole {
+  DepartmentHead
+  Member
+  Assistant
+  Guest
+}
+
 type Appointment {
-  id: Float!
+  id: Int!
   hasExperience: Boolean!
   bestTime: String!
   bestDay: String!
@@ -11,6 +38,7 @@ type Appointment {
   chronicIllness: String!
   agree_rule: Boolean!
   patient: Patient!
+  counsellor: User!
 }
 
 type Patient {
@@ -29,6 +57,24 @@ type Patient {
   appointments: [Appointment!]!
 }
 
+type AppointmentsResult {
+  ok: Boolean!
+  error: String
+  appointments: [Appointment!]!
+}
+
+type CreateAppointmentResult {
+  ok: Boolean!
+  error: String
+  appointment: Appointment
+}
+
+type CreatePatientResult {
+  ok: Boolean!
+  error: String
+  id: String!
+}
+
 type GetPatientByIdResult {
   ok: Boolean!
   error: String
@@ -41,16 +87,15 @@ type GetPatientsResult {
   patients: [Patient!]!
 }
 
-type AppointmentsResult {
+type LoginResult {
   ok: Boolean!
   error: String
-  appointments: [Appointment!]!
+  token: String!
 }
 
-type CreateAppointmentResult {
+type SignUpResult {
   ok: Boolean!
   error: String
-  appointment: Appointment
 }
 
 type Query {
@@ -64,10 +109,13 @@ input GetPatientByIdInput {
 }
 
 type Mutation {
+  createPatient(input: CreatePatientInput!): CreatePatientResult!
   createAppointment(input: CreateAppointmentInput!): CreateAppointmentResult!
+  signup(input: SignUpInput!): SignUpResult!
+  login(input: LoginInput!): LoginResult!
 }
 
-input CreateAppointmentInput {
+input CreatePatientInput {
   name: String!
   phone_number: String!
   email: String!
@@ -79,12 +127,32 @@ input CreateAppointmentInput {
   emergencyPerson: String!
   emergencyPhone: String!
   emergencyRelationship: String!
+}
+
+input CreateAppointmentInput {
   hasExperience: Boolean!
   bestTime: String!
   bestDay: String!
   reasons: String!
   chronicIllness: String!
   agree_rule: Boolean!
+  patientId: Int!
+}
+
+input SignUpInput {
+  first_name: String!
+  last_name: String!
+  email: String!
+  password: String!
+  phone_number: String!
+  department: Department!
+  role: UserRole!
+  member_code: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
 
 type Subscription {
