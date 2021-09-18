@@ -12,6 +12,6 @@ export class LoginInput {
 
 @ObjectType()
 export class LoginResult extends CoreResult {
-  @Field()
-  token: string;
+  @Field(() => String, { nullable: true })
+  token?: string;
 }

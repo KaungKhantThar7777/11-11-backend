@@ -75,7 +75,7 @@ export class User {
 
   @Field()
   @Column()
-  member_code: string;
+  member_id: string;
 
   @OneToMany(() => Appointment, (appointment) => appointment.counsellor)
   appointments: Appointment[];

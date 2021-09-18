@@ -11,7 +11,7 @@ type User {
   phone_number: String!
   department: Department!
   role: UserRole!
-  member_code: String!
+  member_id: String!
 }
 
 enum Department {
@@ -69,6 +69,17 @@ type CreateAppointmentResult {
   appointment: Appointment
 }
 
+type LoginResult {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type SignUpResult {
+  ok: Boolean!
+  error: String
+}
+
 type CreatePatientResult {
   ok: Boolean!
   error: String
@@ -85,17 +96,6 @@ type GetPatientsResult {
   ok: Boolean!
   error: String
   patients: [Patient!]!
-}
-
-type LoginResult {
-  ok: Boolean!
-  error: String
-  token: String!
-}
-
-type SignUpResult {
-  ok: Boolean!
-  error: String
 }
 
 type Query {
@@ -147,7 +147,7 @@ input SignUpInput {
   phone_number: String!
   department: Department!
   role: UserRole!
-  member_code: String!
+  member_id: String!
 }
 
 input LoginInput {

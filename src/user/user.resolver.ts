@@ -37,6 +37,6 @@ export class UserResolver {
       const token = this.authService.sign(payload);
       return { ok: true, token };
     }
-    return { ok: false };
+    return { ok: false, error: 'Invalid email/password' };
   }
 }
