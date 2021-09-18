@@ -38,8 +38,6 @@ import { AuthGuard } from './auth/auth.guard';
         } else if (rest['connectionParams']) {
           return rest['connectionParams'];
         }
-
-        console.log(rest);
       },
       subscriptions: {
         'graphql-ws': true,
