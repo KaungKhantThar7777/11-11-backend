@@ -5,7 +5,7 @@ import { Patient } from '../entities/patient.entity';
 @InputType()
 export class CreatePatientInput extends OmitType(
   Patient,
-  ['id', 'appointments'],
+  ['id', 'appointments', 'createdAt', 'updatedAt'],
   InputType,
 ) {}
 

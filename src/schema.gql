@@ -4,18 +4,27 @@
 
 type User {
   id: Int!
-  first_name: String!
-  last_name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  username: String!
   email: String!
   password: String!
   phone_number: String!
   department: Department!
   role: UserRole!
   member_id: String!
+  appointments: [Appointment!]!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 enum Department {
-  Esd
+  EsdCounselling
+  EsdMeditation
+  EsdYoga
   Media
   Research
   PrCommunity
@@ -31,6 +40,8 @@ enum UserRole {
 
 type Appointment {
   id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   hasExperience: Boolean!
   bestTime: String!
   bestDay: String!
@@ -38,16 +49,20 @@ type Appointment {
   chronicIllness: String!
   agree_rule: Boolean!
   patient: Patient!
-  counsellor: User!
+  counsellor: User
 }
 
 type Patient {
   id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   phone_number: String!
   email: String!
   age: Int!
   gender: String!
+  religion: String!
+  educationBusiness: String!
   maritalStatus: String!
   haveChild: Boolean!
   childrenCount: Int
@@ -78,6 +93,7 @@ type LoginResult {
 type SignUpResult {
   ok: Boolean!
   error: String
+  token: String
 }
 
 type CreatePatientResult {
@@ -121,6 +137,8 @@ input CreatePatientInput {
   email: String!
   age: Int!
   gender: String!
+  religion: String!
+  educationBusiness: String!
   maritalStatus: String!
   haveChild: Boolean!
   childrenCount: Int
@@ -140,8 +158,7 @@ input CreateAppointmentInput {
 }
 
 input SignUpInput {
-  first_name: String!
-  last_name: String!
+  username: String!
   email: String!
   password: String!
   phone_number: String!

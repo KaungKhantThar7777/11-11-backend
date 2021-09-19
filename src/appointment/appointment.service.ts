@@ -14,7 +14,10 @@ export class AppointmentService {
   ) {}
   async getAppointments() {
     const appointments = await this.appointments.find({
-      relations: ['patient'],
+      relations: ['patient', 'counsellor'],
+      order: {
+        createdAt: 'DESC',
+      },
     });
 
     return appointments;

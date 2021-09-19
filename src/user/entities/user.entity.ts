@@ -1,16 +1,13 @@
-import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import * as argon2 from 'argon2';
 import { Appointment } from 'src/appointment/entities/appointment.entity';
-import {
-  BeforeInsert,
-  Column,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { CoreEntity } from 'src/common/entities/core.entity';
+import { BeforeInsert, Column, Entity, OneToMany } from 'typeorm';
 
 export enum Department {
-  Esd = 'esd',
+  EsdCounselling = 'esd_counselling',
+  EsdMeditation = 'esd_meditation',
+  EsdYoga = 'esd_yoga',
   Media = 'media',
   Research = 'research',
   PrCommunity = 'pr_community',
@@ -31,18 +28,10 @@ registerEnumType(UserRole, {
 
 @ObjectType()
 @Entity()
-export class User {
-  @Field(() => Int)
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class User extends CoreEntity {
   @Field()
   @Column()
-  first_name: string;
-
-  @Field()
-  @Column()
-  last_name: string;
+  username: string;
 
   @Field()
   @Column()
@@ -77,6 +66,7 @@ export class User {
   @Column()
   member_id: string;
 
+  @Field(() => [Appointment])
   @OneToMany(() => Appointment, (appointment) => appointment.counsellor)
   appointments: Appointment[];
 }

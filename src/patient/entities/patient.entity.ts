@@ -1,14 +1,11 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Appointment } from 'src/appointment/entities/appointment.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { CoreEntity } from 'src/common/entities/core.entity';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
 @ObjectType()
-export class Patient {
-  @PrimaryGeneratedColumn()
-  @Field(() => Int)
-  id: number;
-
+export class Patient extends CoreEntity {
   @Column()
   @Field(() => String)
   name: string;
@@ -28,6 +25,14 @@ export class Patient {
   @Column()
   @Field(() => String)
   gender: string;
+
+  @Column({ nullable: true })
+  @Field(() => String)
+  religion: string;
+
+  @Column({ nullable: true })
+  @Field(() => String)
+  educationBusiness: string;
 
   @Column()
   @Field()

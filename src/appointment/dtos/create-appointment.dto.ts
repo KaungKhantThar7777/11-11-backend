@@ -5,7 +5,7 @@ import { Appointment } from '../entities/appointment.entity';
 @InputType()
 export class CreateAppointmentInput extends OmitType(
   Appointment,
-  ['id', 'patient', 'counsellor'],
+  ['id', 'patient', 'counsellor', 'createdAt', 'updatedAt'],
   InputType,
 ) {
   @Field(() => Int)

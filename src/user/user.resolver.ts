@@ -12,13 +12,14 @@ export class UserResolver {
     private readonly authService: AuthService,
   ) {}
 
+  @Public()
   @Mutation(() => SignUpResult)
   async signup(@Args('input') input: SignUpInput) {
     try {
-      await this.userService.signup(input);
-      return {
-        ok: true,
-      };
+      const user = await this.userService.signup(input);
+      const payload = { sub: user.id };
+      const token = this.authService.sign(payload);
+      return { ok: true, token };
     } catch (error) {
       return {
         ok: false,

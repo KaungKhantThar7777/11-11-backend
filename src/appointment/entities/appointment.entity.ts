@@ -1,15 +1,12 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { CoreEntity } from 'src/common/entities/core.entity';
 import { Patient } from 'src/patient/entities/patient.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class Appointment {
-  @PrimaryGeneratedColumn()
-  @Field(() => Int)
-  id: number;
-
+export class Appointment extends CoreEntity {
   @Column({ type: 'boolean' })
   @Field(() => Boolean)
   hasExperience: boolean;
@@ -39,6 +36,6 @@ export class Appointment {
   patient: Patient;
 
   @ManyToOne(() => User, (user) => user.appointments)
-  @Field(() => User)
+  @Field(() => User, { nullable: true })
   counsellor: User;
 }
