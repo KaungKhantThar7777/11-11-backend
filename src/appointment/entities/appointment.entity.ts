@@ -7,6 +7,10 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 @ObjectType()
 @Entity()
 export class Appointment extends CoreEntity {
+  @Column({ default: false })
+  @Field(() => Boolean)
+  isTaken: boolean;
+
   @Column({ type: 'boolean' })
   @Field(() => Boolean)
   hasExperience: boolean;

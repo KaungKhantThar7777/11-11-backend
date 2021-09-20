@@ -55,11 +55,11 @@ export class User extends CoreEntity {
   phone_number: string;
 
   @Field(() => Department)
-  @Column({ enum: Department, enumName: 'Department' })
+  @Column()
   department: Department;
 
   @Field(() => UserRole)
-  @Column({ enum: UserRole, enumName: 'UserRole' })
+  @Column()
   role: UserRole;
 
   @Field()

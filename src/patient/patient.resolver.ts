@@ -1,4 +1,5 @@
 import { Args, Resolver, Query, Mutation } from '@nestjs/graphql';
+import { Public } from 'src/auth/meta/public.meta';
 import {
   CreatePatientInput,
   CreatePatientResult,
@@ -14,6 +15,7 @@ import { PatientService } from './patient.service';
 export class PatientResolver {
   constructor(private readonly patientService: PatientService) {}
 
+  @Public()
   @Mutation(() => CreatePatientResult)
   async createPatient(@Args('input') input: CreatePatientInput) {
     try {

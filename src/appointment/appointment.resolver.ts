@@ -13,6 +13,10 @@ import {
 } from './dtos/create-appointment.dto';
 import { Appointment } from './entities/appointment.entity';
 import { Public } from 'src/auth/meta/public.meta';
+import {
+  AssignAppointmentInput,
+  AssignAppointmentResult,
+} from './dtos/assign-appointment';
 
 @Resolver()
 export class AppointmentResolver {
@@ -50,6 +54,14 @@ export class AppointmentResolver {
         error: error.message,
       };
     }
+  }
+
+  @Mutation(() => AssignAppointmentResult)
+  async assignAppointment(@Args('input') input: AssignAppointmentInput) {
+    await this.appointmentService.assignAppointment(input);
+    return {
+      ok: true,
+    };
   }
 
   @Subscription(() => Appointment)
