@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { GetUsersInput } from './dtos/get-users';
 import { SignUpInput } from './dtos/signup.dto';
 import { User } from './entities/user.entity';
 
@@ -18,6 +19,16 @@ export class UserService {
   async findOne(email: string) {
     const user = await this.users.findOne({ email });
     return user;
+  }
+
+  async getUsersByDepartment({ department }: GetUsersInput) {
+    const users = await this.users.find({
+      where: {
+        department,
+      },
+    });
+
+    return users;
   }
 
   findById(id: string) {

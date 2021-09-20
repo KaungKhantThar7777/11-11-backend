@@ -1,6 +1,7 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { AuthService } from 'src/auth/auth.service';
 import { Public } from 'src/auth/meta/public.meta';
+import { GetUsersResult, GetUsersInput } from './dtos/get-users';
 import { LoginInput, LoginResult } from './dtos/login.dto';
 import { SignUpInput, SignUpResult } from './dtos/signup.dto';
 import { UserService } from './user.service';
@@ -39,5 +40,15 @@ export class UserResolver {
       return { ok: true, token };
     }
     return { ok: false, error: 'Invalid email/password' };
+  }
+
+  @Query(() => GetUsersResult)
+  async getUsersByDepartment(@Args('input') input: GetUsersInput) {
+    const users = await this.userService.getUsersByDepartment(input);
+
+    return {
+      ok: true,
+      users,
+    };
   }
 }
