@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Patient } from 'src/patient/entities/patient.entity';
 import { Repository } from 'typeorm';
 import { CreateAppointmentInput } from './dtos/create-appointment.dto';
+import { GetAppointmentsInput } from './dtos/getAppointments.dto';
 import { Appointment } from './entities/appointment.entity';
 
 @Injectable()
@@ -12,15 +13,20 @@ export class AppointmentService {
     private readonly appointments: Repository<Appointment>,
     @InjectRepository(Patient) private readonly patients: Repository<Patient>,
   ) {}
-  async getAppointments() {
+  async getAppointments({ offset, size = 10 }: GetAppointmentsInput) {
     const appointments = await this.appointments.find({
       relations: ['patient', 'counsellor'],
       order: {
         createdAt: 'DESC',
       },
+      take: size + 1,
+      skip: offset,
     });
 
-    return appointments;
+    return {
+      appointments: appointments.slice(0, size),
+      hasMore: appointments.length > size,
+    };
   }
   async createAppointment(input: CreateAppointmentInput) {
     const patient = await this.patients.findOne(input.patientId);

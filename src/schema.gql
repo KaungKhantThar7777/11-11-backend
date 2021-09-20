@@ -72,10 +72,11 @@ type Patient {
   appointments: [Appointment!]!
 }
 
-type AppointmentsResult {
+type GetAppointmentsResult {
   ok: Boolean!
   error: String
   appointments: [Appointment!]!
+  hasMore: Boolean!
 }
 
 type CreateAppointmentResult {
@@ -117,11 +118,16 @@ type GetPatientsResult {
 type Query {
   getPatients: GetPatientsResult!
   getPatientById(input: GetPatientByIdInput!): GetPatientByIdResult!
-  getAppointments: AppointmentsResult!
+  getAppointments(input: GetAppointmentsInput!): GetAppointmentsResult!
 }
 
 input GetPatientByIdInput {
   id: Int!
+}
+
+input GetAppointmentsInput {
+  offset: Int!
+  size: Int!
 }
 
 type Mutation {

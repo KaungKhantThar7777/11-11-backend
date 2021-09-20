@@ -1,14 +1,18 @@
-import { Inject, UseGuards } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { Args, Mutation, Resolver, Query, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { NEW_PENDING_APPOINTMENT, PUB_SUB } from 'src/common/common.contstants';
 import { AppointmentService } from './appointment.service';
-import { AppointmentsResult } from './dtos/getAppointments.dto';
+import {
+  GetAppointmentsInput,
+  GetAppointmentsResult,
+} from './dtos/getAppointments.dto';
 import {
   CreateAppointmentInput,
   CreateAppointmentResult,
 } from './dtos/create-appointment.dto';
 import { Appointment } from './entities/appointment.entity';
+import { Public } from 'src/auth/meta/public.meta';
 
 @Resolver()
 export class AppointmentResolver {
@@ -17,15 +21,16 @@ export class AppointmentResolver {
     @Inject(PUB_SUB) private readonly pubSub: PubSub,
   ) {}
 
-  @Query(() => AppointmentsResult)
-  async getAppointments(): Promise<AppointmentsResult> {
-    const appointments = await this.appointmentService.getAppointments();
+  @Query(() => GetAppointmentsResult)
+  async getAppointments(@Args('input') input: GetAppointmentsInput) {
+    const res = await this.appointmentService.getAppointments(input);
     return {
       ok: true,
-      appointments,
+      ...res,
     };
   }
 
+  @Public()
   @Mutation(() => CreateAppointmentResult)
   async createAppointment(@Args('input') input: CreateAppointmentInput) {
     try {
