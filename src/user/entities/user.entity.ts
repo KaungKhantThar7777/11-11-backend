@@ -34,10 +34,9 @@ export class User extends CoreEntity {
   username: string;
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   email: string;
 
-  @Field()
   @Column()
   password: string;
 

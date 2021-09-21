@@ -1,11 +1,11 @@
-import { Field, InputType, Int, ObjectType, OmitType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
 import { CoreResult } from 'src/common/dtos/core-result.dto';
 import { Appointment } from '../entities/appointment.entity';
 
 @InputType()
-export class CreateAppointmentInput extends OmitType(
+export class CreateAppointmentInput extends PickType(
   Appointment,
-  ['id', 'patient', 'counsellor', 'createdAt', 'updatedAt', 'isTaken'],
+  ['hasExperience', 'chronicIllness', 'reasons'],
   InputType,
 ) {
   @Field(() => String)

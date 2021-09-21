@@ -49,11 +49,18 @@ export class AppointmentService {
     return appointment;
   }
 
-  async assignAppointment({ appointmentId, userId }: AssignAppointmentInput) {
+  async assignAppointment({
+    appointmentId,
+    userId,
+    day,
+    session,
+  }: AssignAppointmentInput) {
     const appointment = await this.appointments.findOne(appointmentId);
     const user = await this.users.findOne(userId);
 
     appointment.counsellor = user;
+    appointment.day = day;
+    appointment.session = session;
     appointment.isTaken = true;
 
     this.appointments.save(appointment);

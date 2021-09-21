@@ -12,6 +12,10 @@ export class Patient extends CoreEntity {
 
   @Column()
   @Field(() => String)
+  facebook_name: string;
+
+  @Column()
+  @Field(() => String)
   phone_number: string;
 
   @Column()

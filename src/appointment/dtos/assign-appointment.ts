@@ -8,6 +8,12 @@ export class AssignAppointmentInput {
 
   @Field(() => Int)
   userId: number;
+
+  @Field(() => Int)
+  session: number;
+
+  @Field(() => String)
+  day: string;
 }
 
 @ObjectType()

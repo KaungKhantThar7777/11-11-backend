@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { CoreEntity } from 'src/common/entities/core.entity';
 import { Patient } from 'src/patient/entities/patient.entity';
 import { User } from 'src/user/entities/user.entity';
@@ -15,13 +15,13 @@ export class Appointment extends CoreEntity {
   @Field(() => Boolean)
   hasExperience: boolean;
 
-  @Column()
-  @Field()
-  bestTime: string;
+  @Column({ nullable: true })
+  @Field(() => Int, { nullable: true })
+  session: number;
 
-  @Column()
-  @Field()
-  bestDay: string;
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  day: string;
 
   @Column()
   @Field()
@@ -30,10 +30,6 @@ export class Appointment extends CoreEntity {
   @Column()
   @Field()
   chronicIllness: string;
-
-  @Column({ type: 'boolean' })
-  @Field(() => Boolean)
-  agree_rule: boolean;
 
   @ManyToOne(() => Patient, (patient) => patient.appointments)
   @Field(() => Patient)

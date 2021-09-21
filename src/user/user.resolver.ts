@@ -1,9 +1,12 @@
 import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { AuthService } from 'src/auth/auth.service';
+import { Me } from 'src/auth/me.decorator';
 import { Public } from 'src/auth/meta/public.meta';
 import { GetUsersResult, GetUsersInput } from './dtos/get-users';
 import { LoginInput, LoginResult } from './dtos/login.dto';
+import { MeResult } from './dtos/me';
 import { SignUpInput, SignUpResult } from './dtos/signup.dto';
+import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 
 @Resolver()
@@ -22,6 +25,9 @@ export class UserResolver {
       const token = this.authService.sign(payload);
       return { ok: true, token };
     } catch (error) {
+      if (error.code === 'ER_DUP_ENTRY') {
+        return { ok: false, error: 'Email is already used' };
+      }
       return {
         ok: false,
         error: error.message,
@@ -49,6 +55,15 @@ export class UserResolver {
     return {
       ok: true,
       users,
+    };
+  }
+
+  @Query(() => MeResult)
+  me(@Me() user: User) {
+    console.log(user);
+    return {
+      ok: true,
+      user,
     };
   }
 }
