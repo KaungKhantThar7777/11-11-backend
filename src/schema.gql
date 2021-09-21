@@ -91,6 +91,12 @@ type AssignAppointmentResult {
   error: String
 }
 
+type GetUserByIdResult {
+  ok: Boolean!
+  error: String
+  user: User
+}
+
 type GetUsersResult {
   ok: Boolean!
   error: String
@@ -113,6 +119,7 @@ type SignUpResult {
   ok: Boolean!
   error: String
   token: String
+  id: Int
 }
 
 type CreatePatientResult {
@@ -137,6 +144,7 @@ type Query {
   getPatients: GetPatientsResult!
   getPatientById(input: GetPatientByIdInput!): GetPatientByIdResult!
   getAppointments(input: GetAppointmentsInput!): GetAppointmentsResult!
+  getUserById(input: GetUserByIdInput!): GetUserByIdResult!
   getUsersByDepartment(input: GetUsersInput!): GetUsersResult!
   me: MeResult!
 }
@@ -148,6 +156,10 @@ input GetPatientByIdInput {
 input GetAppointmentsInput {
   offset: Int!
   size: Int!
+}
+
+input GetUserByIdInput {
+  id: Int!
 }
 
 input GetUsersInput {

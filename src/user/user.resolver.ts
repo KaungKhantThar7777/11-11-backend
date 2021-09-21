@@ -2,6 +2,7 @@ import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { AuthService } from 'src/auth/auth.service';
 import { Me } from 'src/auth/me.decorator';
 import { Public } from 'src/auth/meta/public.meta';
+import { GetUserByIdInput, GetUserByIdResult } from './dtos/get-user-by-id';
 import { GetUsersResult, GetUsersInput } from './dtos/get-users';
 import { LoginInput, LoginResult } from './dtos/login.dto';
 import { MeResult } from './dtos/me';
@@ -16,6 +17,14 @@ export class UserResolver {
     private readonly authService: AuthService,
   ) {}
 
+  @Query(() => GetUserByIdResult)
+  async getUserById(@Args('input') input: GetUserByIdInput) {
+    const user = await this.userService.findById(`${input.id}`);
+    return {
+      ok: true,
+      user,
+    };
+  }
   @Public()
   @Mutation(() => SignUpResult)
   async signup(@Args('input') input: SignUpInput) {
@@ -24,7 +33,7 @@ export class UserResolver {
       const user = await this.userService.signup(input);
       const payload = { sub: user.id };
       const token = this.authService.sign(payload);
-      return { ok: true, token };
+      return { ok: true, token, id: user.id };
     } catch (error) {
       console.log(error);
       if (error.code === 'ER_DUP_ENTRY') {

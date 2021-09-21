@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType, OmitType } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType, OmitType } from '@nestjs/graphql';
 import { CoreResult } from 'src/common/dtos/core-result.dto';
 import { User } from '../entities/user.entity';
 
@@ -13,4 +13,7 @@ export class SignUpInput extends OmitType(
 export class SignUpResult extends CoreResult {
   @Field(() => String, { nullable: true })
   token?: string;
+
+  @Field(() => Int, { nullable: true })
+  id?: number;
 }
