@@ -32,6 +32,8 @@ export class UserService {
   }
 
   findById(id: string) {
-    return this.users.findOne(id);
+    return this.users.findOne(id, {
+      relations: ['appointments'],
+    });
   }
 }

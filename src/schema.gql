@@ -8,6 +8,7 @@ type User {
   updatedAt: DateTime!
   username: String!
   email: String!
+  password: String!
   phone_number: String!
   department: Department!
   role: UserRole!
@@ -195,6 +196,7 @@ input AssignAppointmentInput {
 input SignUpInput {
   username: String!
   email: String!
+  password: String!
   phone_number: String!
   department: Department!
   role: UserRole!

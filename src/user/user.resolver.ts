@@ -20,11 +20,13 @@ export class UserResolver {
   @Mutation(() => SignUpResult)
   async signup(@Args('input') input: SignUpInput) {
     try {
+      console.log(input);
       const user = await this.userService.signup(input);
       const payload = { sub: user.id };
       const token = this.authService.sign(payload);
       return { ok: true, token };
     } catch (error) {
+      console.log(error);
       if (error.code === 'ER_DUP_ENTRY') {
         return { ok: false, error: 'Email is already used' };
       }
@@ -60,7 +62,6 @@ export class UserResolver {
 
   @Query(() => MeResult)
   me(@Me() user: User) {
-    console.log(user);
     return {
       ok: true,
       user,

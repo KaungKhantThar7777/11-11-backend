@@ -37,6 +37,7 @@ export class User extends CoreEntity {
   @Column({ unique: true })
   email: string;
 
+  @Field()
   @Column()
   password: string;
 
@@ -62,7 +63,7 @@ export class User extends CoreEntity {
   role: UserRole;
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   member_id: string;
 
   @Field(() => [Appointment])
