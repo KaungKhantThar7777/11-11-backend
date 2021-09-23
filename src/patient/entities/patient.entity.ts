@@ -22,6 +22,10 @@ export class Patient extends CoreEntity {
   @Field()
   email: string;
 
+  @Column({ type: 'boolean' })
+  @Field(() => Boolean)
+  hasExperience: boolean;
+
   @Column()
   @Field(() => Int)
   age: number;

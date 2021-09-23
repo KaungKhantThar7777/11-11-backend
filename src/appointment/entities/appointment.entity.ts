@@ -11,10 +11,6 @@ export class Appointment extends CoreEntity {
   @Field(() => Boolean)
   isTaken: boolean;
 
-  @Column({ type: 'boolean' })
-  @Field(() => Boolean)
-  hasExperience: boolean;
-
   @Column({ nullable: true })
   @Field(() => Int, { nullable: true })
   session: number;

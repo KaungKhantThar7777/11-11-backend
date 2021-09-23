@@ -29,7 +29,6 @@ export class UserResolver {
   @Mutation(() => SignUpResult)
   async signup(@Args('input') input: SignUpInput) {
     try {
-      console.log(input);
       const user = await this.userService.signup(input);
       const payload = { sub: user.id };
       const token = this.authService.sign(payload);
@@ -54,9 +53,9 @@ export class UserResolver {
     if (user && (await user.verifyPassword(password))) {
       const payload = { sub: user.id };
       const token = this.authService.sign(payload);
-      return { ok: true, token };
+      return { ok: true, token, id: user.id };
     }
-    return { ok: false, error: 'Invalid email/password' };
+    return { ok: false, error: 'Invalid email/password', token: null };
   }
 
   @Query(() => GetUsersResult)

@@ -43,7 +43,6 @@ type Appointment {
   createdAt: DateTime!
   updatedAt: DateTime!
   isTaken: Boolean!
-  hasExperience: Boolean!
   session: Int
   day: String
   reasons: String!
@@ -60,6 +59,7 @@ type Patient {
   facebook_name: String!
   phone_number: String!
   email: String!
+  hasExperience: Boolean!
   age: Int!
   gender: String!
   religion: String!
@@ -107,6 +107,7 @@ type LoginResult {
   ok: Boolean!
   error: String
   token: String
+  id: Int
 }
 
 type MeResult {
@@ -179,6 +180,7 @@ input CreatePatientInput {
   facebook_name: String!
   phone_number: String!
   email: String!
+  hasExperience: Boolean!
   age: Int!
   gender: String!
   religion: String!
@@ -192,7 +194,6 @@ input CreatePatientInput {
 }
 
 input CreateAppointmentInput {
-  hasExperience: Boolean!
   reasons: String!
   chronicIllness: String!
   email: String!
