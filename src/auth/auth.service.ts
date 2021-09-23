@@ -12,11 +12,14 @@ export class AuthService {
   }
 
   verify(token: string) {
-    console.log(process.env.JWT_SECRET, token);
-    const result = this.jwtService.verify(token, {
-      secret: process.env.JWT_SECRET,
-    });
-    console.log(result);
-    return result;
+    try {
+      const result = this.jwtService.verify(token, {
+        secret: process.env.JWT_SECRET,
+      });
+
+      return result;
+    } catch (error) {
+      console.log(error, 'hi');
+    }
   }
 }

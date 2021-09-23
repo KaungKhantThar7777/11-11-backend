@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Appointment } from 'src/appointment/entities/appointment.entity';
 import { Repository } from 'typeorm';
 import { GetUsersInput } from './dtos/get-users';
 import { SignUpInput } from './dtos/signup.dto';
@@ -9,6 +10,8 @@ import { User } from './entities/user.entity';
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly users: Repository<User>,
+    @InjectRepository(Appointment)
+    private readonly appointments: Repository<Appointment>,
   ) {}
 
   async signup(input: SignUpInput) {
@@ -31,9 +34,14 @@ export class UserService {
     return users;
   }
 
-  findById(id: string) {
-    return this.users.findOne(id, {
-      relations: ['appointments'],
+  async findById(id: string) {
+    const user = await this.users.findOne(id);
+    const appointments = await this.appointments.find({
+      where: {
+        counsellorId: user.id,
+      },
     });
+    user.appointments = appointments;
+    return user;
   }
 }

@@ -2,7 +2,7 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { CoreEntity } from 'src/common/entities/core.entity';
 import { Patient } from 'src/patient/entities/patient.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, RelationId } from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -27,11 +27,17 @@ export class Appointment extends CoreEntity {
   @Field()
   chronicIllness: string;
 
-  @ManyToOne(() => Patient, (patient) => patient.appointments)
+  @ManyToOne(() => Patient, (patient) => patient.appointments, {
+    eager: true,
+  })
   @Field(() => Patient)
   patient: Patient;
 
   @ManyToOne(() => User, (user) => user.appointments)
   @Field(() => User, { nullable: true })
   counsellor: User;
+
+  @Column({ nullable: true })
+  @RelationId((appointment: Appointment) => appointment.counsellor)
+  counsellorId: number;
 }
