@@ -69,4 +69,12 @@ export class Patient extends CoreEntity {
   @Field(() => [Appointment])
   @OneToMany(() => Appointment, (appointment) => appointment.patient)
   appointments: Appointment[];
+
+  @Field(() => String, { nullable: true })
+  @Column({ type: 'longtext' })
+  instructions: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ type: 'longtext' })
+  notes: string;
 }

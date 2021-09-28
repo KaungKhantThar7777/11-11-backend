@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreatePatientInput } from './dto/create-patient.dto';
 import { GetPatientByIdInput } from './dto/get-patient-by-id.dto';
+import { SaveInstructionInput } from './dto/save-instruction.dto';
+import { SaveNotesInput } from './dto/save-notes.dto';
 import { Patient } from './entities/patient.entity';
 
 @Injectable()
@@ -34,5 +36,19 @@ export class PatientService {
       relations: ['appointments'],
     });
     return patient;
+  }
+
+  async saveInstruction({ instructions, patientId }: SaveInstructionInput) {
+    const patient = await this.patients.findOne(patientId);
+    patient.instructions = instructions;
+
+    return await this.patients.save(patient);
+  }
+
+  async saveNote({ notes, patientId }: SaveNotesInput) {
+    const patient = await this.patients.findOne(patientId);
+    patient.notes = notes;
+
+    return await this.patients.save(patient);
   }
 }

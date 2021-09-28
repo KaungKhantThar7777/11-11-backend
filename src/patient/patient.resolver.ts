@@ -9,6 +9,11 @@ import {
   GetPatientByIdResult,
 } from './dto/get-patient-by-id.dto';
 import { GetPatientsResult } from './dto/get-patients.dto';
+import {
+  SaveInstructionInput,
+  SaveInstructionResult,
+} from './dto/save-instruction.dto';
+import { SaveNotesInput, SaveNotesResult } from './dto/save-notes.dto';
 import { PatientService } from './patient.service';
 
 @Resolver()
@@ -43,6 +48,26 @@ export class PatientResolver {
   @Query(() => GetPatientByIdResult)
   async getPatientById(@Args('input') input: GetPatientByIdInput) {
     const patient = await this.patientService.getPatientById(input);
+    return {
+      ok: true,
+      patient,
+    };
+  }
+
+  @Mutation(() => SaveInstructionResult)
+  async saveInstructions(@Args('input') input: SaveInstructionInput) {
+    const patient = await this.patientService.saveInstruction(input);
+
+    return {
+      ok: true,
+      patient,
+    };
+  }
+
+  @Mutation(() => SaveNotesResult)
+  async saveNotes(@Args('input') input: SaveNotesInput) {
+    const patient = await this.patientService.saveNote(input);
+
     return {
       ok: true,
       patient,

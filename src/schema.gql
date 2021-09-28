@@ -71,6 +71,8 @@ type Patient {
   emergencyPhone: String!
   emergencyRelationship: String!
   appointments: [Appointment!]!
+  instructions: String
+  notes: String
 }
 
 type GetAppointmentsResult {
@@ -141,6 +143,18 @@ type GetPatientsResult {
   patients: [Patient!]!
 }
 
+type SaveInstructionResult {
+  ok: Boolean!
+  error: String
+  patient: Patient!
+}
+
+type SaveNotesResult {
+  ok: Boolean!
+  error: String
+  patient: Patient!
+}
+
 type Query {
   getPatients: GetPatientsResult!
   getPatientById(input: GetPatientByIdInput!): GetPatientByIdResult!
@@ -169,6 +183,8 @@ input GetUsersInput {
 
 type Mutation {
   createPatient(input: CreatePatientInput!): CreatePatientResult!
+  saveInstructions(input: SaveInstructionInput!): SaveInstructionResult!
+  saveNotes(input: SaveNotesInput!): SaveNotesResult!
   createAppointment(input: CreateAppointmentInput!): CreateAppointmentResult!
   assignAppointment(input: AssignAppointmentInput!): AssignAppointmentResult!
   signup(input: SignUpInput!): SignUpResult!
@@ -191,6 +207,18 @@ input CreatePatientInput {
   emergencyPerson: String!
   emergencyPhone: String!
   emergencyRelationship: String!
+  instructions: String
+  notes: String
+}
+
+input SaveInstructionInput {
+  patientId: Int!
+  instructions: String!
+}
+
+input SaveNotesInput {
+  patientId: Int!
+  notes: String!
 }
 
 input CreateAppointmentInput {
