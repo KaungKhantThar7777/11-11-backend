@@ -19,7 +19,7 @@ import { UserModule } from './user/user.module';
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: process.env.DB_HOST || 'localhost',
       port: +process.env.DB_PORT,
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
@@ -29,6 +29,7 @@ import { UserModule } from './user/user.module';
       logging: 'all',
     }),
     GraphQLModule.forRoot({
+      introspection: true,
       installSubscriptionHandlers: true,
       subscriptions: {
         'subscriptions-transport-ws': {
