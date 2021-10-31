@@ -141,6 +141,7 @@ type GetPatientsResult {
   ok: Boolean!
   error: String
   patients: [Patient!]!
+  totalCount: Int!
 }
 
 type SaveInstructionResult {
@@ -156,12 +157,17 @@ type SaveNotesResult {
 }
 
 type Query {
-  getPatients: GetPatientsResult!
+  getPatients(input: GetPatientsInput!): GetPatientsResult!
   getPatientById(input: GetPatientByIdInput!): GetPatientByIdResult!
   getAppointments(input: GetAppointmentsInput!): GetAppointmentsResult!
   getUserById(input: GetUserByIdInput!): GetUserByIdResult!
   getUsersByDepartment(input: GetUsersInput!): GetUsersResult!
   me: MeResult!
+}
+
+input GetPatientsInput {
+  offset: Int!
+  limit: Int!
 }
 
 input GetPatientByIdInput {

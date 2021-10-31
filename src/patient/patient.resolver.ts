@@ -8,7 +8,7 @@ import {
   GetPatientByIdInput,
   GetPatientByIdResult,
 } from './dto/get-patient-by-id.dto';
-import { GetPatientsResult } from './dto/get-patients.dto';
+import { GetPatientsInput, GetPatientsResult } from './dto/get-patients.dto';
 import {
   SaveInstructionInput,
   SaveInstructionResult,
@@ -25,6 +25,7 @@ export class PatientResolver {
   async createPatient(@Args('input') input: CreatePatientInput) {
     try {
       const patient = await this.patientService.createPatient(input);
+
       return {
         ok: true,
         id: patient.id,
@@ -37,11 +38,12 @@ export class PatientResolver {
     }
   }
   @Query(() => GetPatientsResult)
-  async getPatients() {
-    const patients = await this.patientService.getPatients();
+  async getPatients(@Args('input') input: GetPatientsInput) {
+    const [patients, count] = await this.patientService.getPatients(input);
     return {
       ok: true,
       patients,
+      totalCount: count,
     };
   }
 

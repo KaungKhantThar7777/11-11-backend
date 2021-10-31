@@ -71,10 +71,10 @@ export class Patient extends CoreEntity {
   appointments: Appointment[];
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'longtext' })
+  @Column({ type: 'longtext', nullable: true })
   instructions: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'longtext' })
+  @Column({ type: 'longtext', nullable: true })
   notes: string;
 }
