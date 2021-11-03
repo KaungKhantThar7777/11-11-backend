@@ -24,11 +24,13 @@ export class UserService {
     return user;
   }
 
-  async getUsersByDepartment({ department }: GetUsersInput) {
+  async getUsersByDepartment({ department, limit, offset }: GetUsersInput) {
     const users = await this.users.find({
       where: {
         department,
       },
+      skip: offset,
+      take: limit,
     });
 
     return users;

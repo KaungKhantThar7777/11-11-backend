@@ -60,11 +60,14 @@ export class UserResolver {
 
   @Query(() => GetUsersResult)
   async getUsersByDepartment(@Args('input') input: GetUsersInput) {
-    const users = await this.userService.getUsersByDepartment(input);
+    const [users, totalCount] = await this.userService.getUsersByDepartment(
+      input,
+    );
 
     return {
       ok: true,
       users,
+      totalCount,
     };
   }
 
