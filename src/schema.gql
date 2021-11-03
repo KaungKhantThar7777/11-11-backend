@@ -103,6 +103,7 @@ type GetUsersResult {
   ok: Boolean!
   error: String
   users: [User!]!
+  totalCount: Int!
 }
 
 type LoginResult {
@@ -184,6 +185,8 @@ input GetUserByIdInput {
 }
 
 input GetUsersInput {
+  offset: Int!
+  limit: Int!
   department: Department!
 }
 

@@ -29,6 +29,7 @@ export class UserService {
       where: {
         department,
       },
+      relations: ['appointments'],
       skip: offset,
       take: limit,
     });
