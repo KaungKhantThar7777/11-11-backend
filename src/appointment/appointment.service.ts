@@ -59,7 +59,6 @@ export class AppointmentService {
     const user = await this.users.findOne(userId);
 
     appointment.counsellor = user;
-    appointment.counsellorId = userId;
     appointment.day = day;
     appointment.session = session;
     appointment.isTaken = true;

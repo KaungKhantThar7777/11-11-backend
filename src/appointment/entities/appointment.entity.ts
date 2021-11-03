@@ -33,11 +33,9 @@ export class Appointment extends CoreEntity {
   @Field(() => Patient)
   patient: Patient;
 
-  @ManyToOne(() => User, (user) => user.appointments)
+  @ManyToOne(() => User, (user) => user.appointments, {
+    eager: true,
+  })
   @Field(() => User, { nullable: true })
   counsellor: User;
-
-  @Column({ nullable: true })
-  @RelationId((appointment: Appointment) => appointment.counsellor)
-  counsellorId: number;
 }

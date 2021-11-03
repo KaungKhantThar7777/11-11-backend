@@ -41,7 +41,7 @@ export class UserService {
     const user = await this.users.findOne(id);
     const appointments = await this.appointments.find({
       where: {
-        counsellorId: user.id,
+        counsellor: user,
       },
     });
     user.appointments = appointments;

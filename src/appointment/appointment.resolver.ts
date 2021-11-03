@@ -28,6 +28,7 @@ export class AppointmentResolver {
   @Query(() => GetAppointmentsResult)
   async getAppointments(@Args('input') input: GetAppointmentsInput) {
     const res = await this.appointmentService.getAppointments(input);
+    console.log(res);
     return {
       ok: true,
       ...res,

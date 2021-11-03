@@ -26,7 +26,6 @@ import { UserModule } from './user/user.module';
       database: process.env.DB_NAME,
       entities: [Patient, Appointment, User],
       synchronize: true,
-      logging: 'all',
     }),
     GraphQLModule.forRoot({
       introspection: true,
