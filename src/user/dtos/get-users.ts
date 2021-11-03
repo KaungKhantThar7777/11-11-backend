@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { CoreResult } from 'src/common/dtos/core-result.dto';
 import { Department, User } from '../entities/user.entity';
 
@@ -16,4 +16,7 @@ export class GetUsersInput {
 export class GetUsersResult extends CoreResult {
   @Field(() => [User])
   users: User[];
+
+  @Field(() => Int)
+  totalCount: number;
 }
