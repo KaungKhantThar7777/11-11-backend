@@ -25,7 +25,7 @@ export class UserService {
   }
 
   async getUsersByDepartment({ department, limit, offset }: GetUsersInput) {
-    const users = await this.users.find({
+    const result = await this.users.findAndCount({
       where: {
         department,
       },
@@ -33,7 +33,7 @@ export class UserService {
       take: limit,
     });
 
-    return users;
+    return result;
   }
 
   async findById(id: string) {
