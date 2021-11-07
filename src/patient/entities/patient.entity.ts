@@ -54,16 +54,16 @@ export class Patient extends CoreEntity {
   @Field(() => Int, { nullable: true })
   childrenCount: number;
 
-  @Column()
-  @Field()
-  emergencyPerson: string;
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  emergencyPerson?: string;
 
-  @Column()
-  @Field()
-  emergencyPhone: string;
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  emergencyPhone?: string;
 
-  @Column()
-  @Field()
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
   emergencyRelationship: string;
 
   @Field(() => [Appointment])

@@ -67,9 +67,9 @@ type Patient {
   maritalStatus: String!
   haveChild: Boolean!
   childrenCount: Int
-  emergencyPerson: String!
-  emergencyPhone: String!
-  emergencyRelationship: String!
+  emergencyPerson: String
+  emergencyPhone: String
+  emergencyRelationship: String
   appointments: [Appointment!]!
   instructions: String
   notes: String
@@ -213,9 +213,9 @@ input CreatePatientInput {
   maritalStatus: String!
   haveChild: Boolean!
   childrenCount: Int
-  emergencyPerson: String!
-  emergencyPhone: String!
-  emergencyRelationship: String!
+  emergencyPerson: String
+  emergencyPhone: String
+  emergencyRelationship: String
   instructions: String
   notes: String
 }
