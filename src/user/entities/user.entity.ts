@@ -58,10 +58,6 @@ export class User extends CoreEntity {
   @Column()
   department: Department;
 
-  @Field(() => UserRole)
-  @Column()
-  role: UserRole;
-
   @Field()
   @Column({ unique: true })
   member_id: string;
