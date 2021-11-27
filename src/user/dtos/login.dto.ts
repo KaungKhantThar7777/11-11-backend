@@ -17,4 +17,7 @@ export class LoginResult extends CoreResult {
 
   @Field(() => Int, { nullable: true })
   id?: string;
+
+  @Field(() => Date, { nullable: true })
+  expiresIn: Date;
 }

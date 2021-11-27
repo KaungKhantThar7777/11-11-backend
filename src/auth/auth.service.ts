@@ -8,6 +8,7 @@ export class AuthService {
   sign(payload: any) {
     return this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
+      expiresIn: '3 seconds',
     });
   }
 
@@ -19,7 +20,7 @@ export class AuthService {
 
       return result;
     } catch (error) {
-      console.log(error, 'hi');
+      throw error;
     }
   }
 }

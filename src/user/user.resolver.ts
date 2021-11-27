@@ -53,7 +53,12 @@ export class UserResolver {
     if (user && (await user.verifyPassword(password))) {
       const payload = { sub: user.id };
       const token = this.authService.sign(payload);
-      return { ok: true, token, id: user.id };
+      return {
+        ok: true,
+        token,
+        id: user.id,
+        expiresIn: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      };
     }
     return { ok: false, error: 'Invalid email/password', token: null };
   }

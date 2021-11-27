@@ -9,7 +9,7 @@ export class CreateAppointmentInput extends PickType(
   InputType,
 ) {
   @Field(() => String)
-  email: string;
+  emailOrId: string;
 }
 
 @ObjectType()

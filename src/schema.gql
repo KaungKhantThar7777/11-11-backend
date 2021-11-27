@@ -103,6 +103,7 @@ type LoginResult {
   error: String
   token: String
   id: Int
+  expiresIn: DateTime
 }
 
 type MeResult {
@@ -225,7 +226,7 @@ input SaveNotesInput {
 input CreateAppointmentInput {
   reasons: String!
   chronicIllness: String!
-  email: String!
+  emailOrId: String!
 }
 
 input AssignAppointmentInput {

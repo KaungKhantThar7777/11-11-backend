@@ -34,13 +34,23 @@ export class AppointmentService {
   }
   async createAppointment(input: CreateAppointmentInput) {
     const patient = await this.patients.findOne({
-      where: {
-        email: input.email,
-      },
+      where: [
+        {
+          email: input.emailOrId,
+        },
+        {
+          id: input.emailOrId,
+        },
+      ],
+      relations: ['appointments'],
     });
+
     if (!patient) {
       throw new Error('No patient found');
     }
+
+    if (patient.appointments?.length) patient.hasExperience = true;
+    await this.patients.save(patient);
     const appointment = this.appointments.create({
       ...input,
       patient,
