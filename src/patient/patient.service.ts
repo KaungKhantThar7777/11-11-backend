@@ -26,13 +26,17 @@ export class PatientService {
     return patient;
   }
   async getPatients(input: GetPatientsInput) {
-    const results = await this.patients.findAndCount({
+    const { offset, size } = input;
+    const patients = await this.patients.find({
       relations: ['appointments'],
-      skip: input.offset,
-      take: input.limit,
+      skip: offset,
+      take: size + 1,
     });
 
-    return results;
+    return {
+      patients: patients.slice(0, size),
+      hasMore: patients.length > size,
+    };
   }
   async getPatientById({ id }: GetPatientByIdInput) {
     const patient = await this.patients.findOne({

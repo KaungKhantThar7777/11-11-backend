@@ -8,7 +8,7 @@ export class AuthService {
   sign(payload: any) {
     return this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: '3 seconds',
+      expiresIn: '1 day',
     });
   }
 

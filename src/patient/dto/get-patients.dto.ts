@@ -7,13 +7,13 @@ export class GetPatientsInput {
   @Field(() => Int)
   offset: number;
   @Field(() => Int)
-  limit: number;
+  size: number;
 }
 @ObjectType()
 export class GetPatientsResult extends CoreResult {
   @Field(() => [Patient])
   patients: Patient[];
 
-  @Field(() => Int)
-  totalCount: number;
+  @Field(() => Boolean)
+  hasMore: boolean;
 }

@@ -39,11 +39,12 @@ export class PatientResolver {
   }
   @Query(() => GetPatientsResult)
   async getPatients(@Args('input') input: GetPatientsInput) {
-    const [patients, count] = await this.patientService.getPatients(input);
+    const { patients, hasMore } = await this.patientService.getPatients(input);
+
     return {
       ok: true,
       patients,
-      totalCount: count,
+      hasMore,
     };
   }
 
