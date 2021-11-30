@@ -32,9 +32,13 @@ export class UserResolver {
       const user = await this.userService.signup(input);
       const payload = { sub: user.id };
       const token = this.authService.sign(payload);
-      return { ok: true, token, id: user.id };
+      return {
+        ok: true,
+        token,
+        id: user.id,
+        expiresIn: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      };
     } catch (error) {
-      console.log(error);
       if (error.code === 'ER_DUP_ENTRY') {
         return { ok: false, error: 'Email is already used' };
       }
@@ -65,14 +69,11 @@ export class UserResolver {
 
   @Query(() => GetUsersResult)
   async getUsersByDepartment(@Args('input') input: GetUsersInput) {
-    const [users, totalCount] = await this.userService.getUsersByDepartment(
-      input,
-    );
+    const users = await this.userService.getUsersByDepartment(input);
 
     return {
       ok: true,
       users,
-      totalCount,
     };
   }
 

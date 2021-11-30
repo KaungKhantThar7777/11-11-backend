@@ -4,10 +4,6 @@ import { Department, User } from '../entities/user.entity';
 
 @InputType()
 export class GetUsersInput {
-  @Field(() => Int)
-  offset: number;
-  @Field(() => Int)
-  limit: number;
   @Field(() => Department)
   department: Department;
 }
@@ -16,7 +12,4 @@ export class GetUsersInput {
 export class GetUsersResult extends CoreResult {
   @Field(() => [User])
   users: User[];
-
-  @Field(() => Int)
-  totalCount: number;
 }

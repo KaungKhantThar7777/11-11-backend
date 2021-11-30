@@ -24,14 +24,12 @@ export class UserService {
     return user;
   }
 
-  async getUsersByDepartment({ department, limit, offset }: GetUsersInput) {
+  async getUsersByDepartment({ department }: GetUsersInput) {
     const result = await this.users.findAndCount({
       where: {
         department,
       },
       relations: ['appointments'],
-      skip: offset,
-      take: limit,
     });
 
     return result;

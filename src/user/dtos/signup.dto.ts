@@ -16,4 +16,7 @@ export class SignUpResult extends CoreResult {
 
   @Field(() => Int, { nullable: true })
   id?: number;
+
+  @Field(() => Date, { nullable: true })
+  expiresIn: Date;
 }

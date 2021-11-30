@@ -11,6 +11,7 @@ type User {
   password: String!
   phone_number: String!
   department: Department!
+  role: UserRole!
   member_id: String!
   appointments: [Appointment!]!
 }
@@ -28,6 +29,13 @@ enum Department {
   Research
   PrCommunity
   OrganizerSupport
+}
+
+enum UserRole {
+  leader
+  coleader
+  officer
+  member
 }
 
 type Appointment {
@@ -95,7 +103,6 @@ type GetUsersResult {
   ok: Boolean!
   error: String
   users: [User!]!
-  totalCount: Int!
 }
 
 type LoginResult {
@@ -117,6 +124,7 @@ type SignUpResult {
   error: String
   token: String
   id: Int
+  expiresIn: DateTime
 }
 
 type CreatePatientResult {
@@ -178,8 +186,6 @@ input GetUserByIdInput {
 }
 
 input GetUsersInput {
-  offset: Int!
-  limit: Int!
   department: Department!
 }
 
@@ -242,6 +248,7 @@ input SignUpInput {
   password: String!
   phone_number: String!
   department: Department!
+  role: UserRole!
   member_id: String!
 }
 

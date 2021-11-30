@@ -17,10 +17,10 @@ registerEnumType(Department, {
   name: 'Department',
 });
 export enum UserRole {
-  DepartmentHead = 'department_head',
-  Member = 'member',
-  Assistant = 'assistant',
-  Guest = 'guest',
+  leader = 'Leader',
+  coleader = 'Co-Leader',
+  officer = 'Officer',
+  member = 'Member',
 }
 registerEnumType(UserRole, {
   name: 'UserRole',
@@ -57,6 +57,10 @@ export class User extends CoreEntity {
   @Field(() => Department)
   @Column()
   department: Department;
+
+  @Field(() => UserRole)
+  @Column()
+  role: UserRole;
 
   @Field()
   @Column({ unique: true })
