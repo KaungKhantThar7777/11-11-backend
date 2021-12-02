@@ -25,13 +25,14 @@ export class UserService {
   }
 
   async getUsersByDepartment({ department }: GetUsersInput) {
-    const result = await this.users.findAndCount({
+    const result = await this.users.find({
       where: {
         department,
       },
       relations: ['appointments'],
     });
 
+    console.log(result);
     return result;
   }
 

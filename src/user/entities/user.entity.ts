@@ -5,13 +5,8 @@ import { CoreEntity } from 'src/common/entities/core.entity';
 import { BeforeInsert, Column, Entity, OneToMany } from 'typeorm';
 
 export enum Department {
-  EsdCounselling = 'esd_counselling',
-  EsdMeditation = 'esd_meditation',
-  EsdYoga = 'esd_yoga',
-  Media = 'media',
-  Research = 'research',
-  PrCommunity = 'pr_community',
-  OrganizerSupport = 'organizer_support',
+  PR = 'pr',
+  MST = 'mst',
 }
 registerEnumType(Department, {
   name: 'Department',
