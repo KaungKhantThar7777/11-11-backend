@@ -20,6 +20,7 @@ export class PatientService {
     if (patient) {
       return patient;
     }
+    console.log(input);
     patient = this.patients.create(input);
 
     await this.patients.save(patient);
